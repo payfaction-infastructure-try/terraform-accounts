@@ -39,7 +39,7 @@ resource "circleci_context" "accounts-app-context" {
 resource "circleci_context_environment_variable" "accounts-app-context-env" {
   for_each = {
     AWS_RESOURCE_NAME_PREFIX = "${var.AWS_RESOURCE_NAME_PREFIX}"
-    AWS_ECR_REPOSITORY_URL = "${module.main-infrastructure.outputs.aws_ecr_repository_url}"
+    AWS_ECR_REPOSITORY_URL = "${module.main-infrastructure.aws_ecr_repository_url}"
   }
 
   variable   = each.key

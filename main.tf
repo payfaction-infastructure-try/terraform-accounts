@@ -32,11 +32,11 @@ module "main-infrastructure" {
   private_subnets = data.terraform_remote_state.main_infrastructure.outputs.private_subnets
 }
 
-resource "circleci_context" "context" {
+resource "circleci_context" "aws" {
   name  = "${var.AWS_RESOURCE_NAME_PREFIX}"
 }
 
-resource "circleci_context_environment_variable" "context" {
+resource "circleci_context_environment_variable" "aws_env" {
   for_each = {
     AWS_RESOURCE_NAME_PREFIX = "${var.AWS_RESOURCE_NAME_PREFIX}"
   }

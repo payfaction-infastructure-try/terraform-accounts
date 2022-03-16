@@ -5,9 +5,9 @@ provider "aws" {
 }
 
 provider "circleci" {
-  api_token    = "${CIRCLECI_API_TOKEN}"
-  vcs_type     = "${CIRCLECI_VCS_TYPE}"
-  organization = "${CIRCLECI_ORGANIZATION}"
+  api_token    = "${var.CIRCLECI_API_TOKEN}"
+  vcs_type     = "${var.CIRCLECI_VCS_TYPE}"
+  organization = "${var.CIRCLECI_ORGANIZATION}"
 }
 
 data "terraform_remote_state" "main_infrastructure" {

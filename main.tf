@@ -22,7 +22,7 @@ data "terraform_remote_state" "main_infrastructure" {
 
 module "main-infrastructure" {
   source  = "payfaction-infastructure-try/infrastructure/application"
-  version = "0.0.1"
+  version = "0.0.2"
 
   aws_resource_name_prefix = var.AWS_RESOURCE_NAME_PREFIX
   vpc_id = data.terraform_remote_state.main_infrastructure.outputs.vpc_id

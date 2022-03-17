@@ -22,7 +22,7 @@ data "terraform_remote_state" "main_infrastructure" {
 
 resource "aws_security_group" "accounts_sg" {
   name        = "${local.aws_ecs_service_security_group_name}"
-  vpc_id      = var.vpc_id
+  vpc_id      = data.terraform_remote_state.main_infrastructure.outputs.vpc_id
 
   ingress {
     protocol        = "tcp"

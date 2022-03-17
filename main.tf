@@ -20,9 +20,9 @@ data "terraform_remote_state" "main_infrastructure" {
   }
 }
 
-module "main-infrastructure" {
+module "app_infrastructure" {
   source  = "payfaction-infastructure-try/infrastructure/application"
-  version = "0.0.5"
+  version = "0.0.6"
 
   aws_resource_name_prefix = var.AWS_RESOURCE_NAME_PREFIX
   vpc_id = data.terraform_remote_state.main_infrastructure.outputs.vpc_id
@@ -39,7 +39,8 @@ resource "circleci_context" "accounts-app-context" {
 resource "circleci_context_environment_variable" "accounts-app-context-env" {
   for_each = {
     AWS_RESOURCE_NAME_PREFIX = "${var.AWS_RESOURCE_NAME_PREFIX}"
-    AWS_ECR_REPOSITORY_URL = "${module.main-infrastructure.aws_ecr_repository_url}"
+    AWS_ECR_REPOSITORY_URL = "${module.app_infrastructure.aws_ecr_repository.repository_url}"
+    AWS_ECR_REPOSITORY_REGISTRY_ID = "${module.app_infrastructure.aws_ecr_repository.registry_id}"
   }
 
   variable   = each.key

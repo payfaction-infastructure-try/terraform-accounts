@@ -64,7 +64,7 @@ resource "aws_lb_listener_rule" "accounts_listener_rule" {
 
 module "app_infrastructure" {
   source  = "payfaction-infastructure-try/infrastructure/application"
-  version = "0.0.7"
+  version = "0.0.8"
 
   aws_resource_name_prefix = var.AWS_RESOURCE_NAME_PREFIX
   cluster_id = data.terraform_remote_state.main_infrastructure.outputs.cluster_id

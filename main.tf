@@ -47,15 +47,19 @@ resource "aws_lb_target_group" "accounts_tg" {
   target_type = "ip"
 }
 
-resource "aws_lb_listener" "accounts_listener" {
-  load_balancer_arn = data.terraform_remote_state.main_infrastructure.outputs.load_balancer_id
-  port              = "80"
-  protocol          = "HTTP"
+resource "aws_lb_listener_rule" "accounts_listener_rule" {
+  listener_arn = data.terraform_remote_state.main_infrastructure.outputs.lb_listener
+  priority     = 100
 
-  default_action {
-    target_group_arn = aws_lb_target_group.accounts_tg.id
+  action {
     type             = "forward"
+    target_group_arn = aws_lb_target_group.accounts_tg.arn
   }
+    condition {
+      path_pattern {
+        values = ["/accounts"]
+      }
+    }
 }
 
 module "app_infrastructure" {
@@ -66,7 +70,7 @@ module "app_infrastructure" {
   cluster_id = data.terraform_remote_state.main_infrastructure.outputs.cluster_id
   private_subnets = data.terraform_remote_state.main_infrastructure.outputs.private_subnets
   target_group_id = aws_lb_target_group.accounts_tg.id
-  lb_listener = aws_lb_listener.accounts_listener
+  lb_listener = data.terraform_remote_state.main_infrastructure.outputs.lb_listener
   security_group_id = aws_security_group.accounts_sg.id
 }
 

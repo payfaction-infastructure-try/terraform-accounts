@@ -48,7 +48,7 @@ resource "aws_lb_target_group" "accounts_tg" {
 }
 
 resource "aws_lb_listener_rule" "accounts_listener_rule" {
-  listener_arn = data.terraform_remote_state.main_infrastructure.outputs.lb_listener
+  listener_arn = data.terraform_remote_state.main_infrastructure.outputs.lb_listener.arn
   priority     = 100
 
   action {
